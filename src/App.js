@@ -5,6 +5,13 @@ import TextForm from './component/TextForm';
 import Alert from './component/Alert';
 import Footer from './component/Footer';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+
 function App() {
   const [mode, setmode] = useState('light'); // whether dark mode is enabled or not
   const [modetxt, setmodetxt] = useState('light mode'); // whether dark mode text
@@ -66,15 +73,23 @@ function App() {
   }
 
   return (
-    <>
+
+    <Router>
+      <div>
       <Navbar title="TextUtils" aboutTitle="About TextUtils" Mode={mode} Modetxt={modetxt} togglemode={togglemode} txtcolor={txtcolor} togglemode_blue={togglemode_blue}/>
       <Alert alert={alert} />
-      <div className="container my-3">
-      <TextForm heading="Enter your text here" subheading="Text Box" Mode={mode} showAlert={showAlert}/>
-      <About Mode={mode}/>
-      <Footer/>
+        <Switch>
+          <Route exact path="/about">
+          <About exact Mode={mode}/>
+          </Route>
+          <Route path="/">
+            <TextForm heading="Enter your text here" subheading="Text Box" Mode={mode} showAlert={showAlert}/>
+          </Route>
+        </Switch>
+        <Footer/>
       </div>
-    </>
+    </Router>
+
   );
 }
 
